@@ -1,11 +1,12 @@
-import type {Tweet} from '../App.tsx'
+import type {Tweet} from '../mainPage/MainPage.tsx'
+import './TweetList.css'
 
 type TweetsProps = {
     tweets: Tweet[]
     handleDelete: (id: number) => void
 }
 
-export function PrintTweets({tweets, handleDelete}: TweetsProps  ){
+export function TweetList({tweets, handleDelete}: TweetsProps  ){
 
 
     return(
