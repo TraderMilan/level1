@@ -3,19 +3,34 @@ import type {Tweet} from '../mainPage/MainPage.tsx'
 
 export function useTweetAdd(
     setTweets: (tweets: Tweet[]) => void,
-    tweets: Tweet[]
 ) {
     const [newTweet, setNewTweet] = useState<string>('');
 
-    function generateId(): number {
-        if (tweets.length === 0) return 1
-        return Math.max(...tweets.map(t => t.id)) + 1
-    }
 
-    function handleNewTweet() {
+    async function handleNewTweet() {
         if (newTweet.trim().length === 0) return
-        setTweets([...tweets, {id: generateId(), title: newTweet}])
-        setNewTweet('')
+
+        try {
+            const res = await fetch('http://localhost:3000/tweet', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({content: newTweet}),
+            })
+
+            if (!res.ok) throw new Error("Error while posting tweet")
+
+            const getRes = await fetch('http://localhost:3000/tweet')
+            const data = await getRes.json()
+
+            setTweets(data)
+            setNewTweet('')
+
+
+        } catch (error) {
+            console.error(error)
+        }
+
+
     }
 
 

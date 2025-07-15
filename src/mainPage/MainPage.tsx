@@ -6,22 +6,29 @@ import {useTweetList} from "../tweetList/useTweetList.ts";
 
 export interface Tweet {
     id: number;
-    title: string;
+    content: string;
 }
 
 export function MainPage() {
-    const [tweets, setTweets] = useState<Tweet[]>( () => {
-            const stored = localStorage.getItem('tweets')
-            return stored ? JSON.parse(stored) : []
-        }
-    );
-    const {newTweet, setNewTweet, handleNewTweet} = useTweetAdd(setTweets, tweets);
+    const [tweets, setTweets] = useState<Tweet[]>([]);
+    const {newTweet, setNewTweet, handleNewTweet} = useTweetAdd(setTweets);
     const {handleDelete} = useTweetList(tweets, setTweets)
 
 
     useEffect(() => {
-        localStorage.setItem('tweets', JSON.stringify(tweets));
-    }, [tweets]);
+        const fetchTweets = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/tweet');
+                const data = await response.json()
+                setTweets(data);
+            } catch (error) {
+                console.error("Error while loading tweets",error);
+            }
+        }
+
+        fetchTweets();
+    }, []);
+
 
 
 

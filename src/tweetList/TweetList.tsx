@@ -12,7 +12,7 @@ export function TweetList({tweets, handleDelete}: TweetsProps  ){
     return(
         <ul className={"tweets"}>
             {tweets.map(tweet => <li key={tweet.id}>
-                {tweet.title}
+                {tweet.content}
                 <div className={"remove"} onClick={() =>handleDelete(tweet.id)}>x</div>
             </li>)}
         </ul>
