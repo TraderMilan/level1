@@ -1,36 +1,28 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Tweet, TweetDocument } from './tweet.schema';
 
 export class CreateTweetDto {
   content: string;
 }
 
-export class Tweet {
-  id: number;
-  content: string;
-}
-
 @Injectable()
 export class TweetService {
-  private tweets: Tweet[] = [];
+  constructor(
+    @InjectModel(Tweet.name) private tweetModel: Model<TweetDocument>,
+  ) {}
 
-  addTweet(tweetDto: CreateTweetDto): Tweet {
-    const newTweet = {
-      id:
-        this.tweets.length > 0
-          ? Math.max(...this.tweets.map((t) => t.id)) + 1
-          : 1,
-      content: tweetDto.content,
-    };
-
-    this.tweets.push(newTweet);
-    return newTweet;
+  async addTweet(tweetDto: CreateTweetDto): Promise<Tweet> {
+    const createdTweet = new this.tweetModel(tweetDto);
+    return createdTweet.save();
   }
 
-  getAllTweets(): Tweet[] {
-    return this.tweets;
+  async getAllTweets(): Promise<Tweet[]> {
+    return this.tweetModel.find().exec();
   }
 
-  deleteTweet(id: number) {
-    this.tweets = this.tweets.filter((t) => t.id !== id);
+  async deleteTweet(id: string): Promise<void> {
+    await this.tweetModel.findByIdAndDelete(id);
   }
 }

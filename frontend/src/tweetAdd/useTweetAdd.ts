@@ -1,5 +1,5 @@
 import {useState} from "react";
-import type {Tweet} from '../mainPage/MainPage.tsx'
+import type {Tweet} from '../pages/MainPage.tsx'
 
 export function useTweetAdd(
     setTweets: (tweets: Tweet[]) => void,

@@ -2,9 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TweetModule } from './tweet/tweet.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [TweetModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost:27017/tweets-app'), // pripojenie na MongoDB
+    TweetModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -7,7 +7,7 @@ export class TweetController {
 
   @Post()
   addTweet(@Body() createTweetDto: CreateTweetDto) {
-    this.tweetService.addTweet(createTweetDto);
+    return this.tweetService.addTweet(createTweetDto);
   }
 
   @Get()
@@ -17,6 +17,6 @@ export class TweetController {
 
   @Delete(':id')
   deleteTweet(@Param('id') id: string) {
-    this.tweetService.deleteTweet(Number(id));
+    return this.tweetService.deleteTweet(id);
   }
 }

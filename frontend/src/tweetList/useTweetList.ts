@@ -1,4 +1,4 @@
-import type {Tweet} from "../mainPage/MainPage.tsx";
+import type {Tweet} from "../pages/MainPage.tsx";
 
 
 export function useTweetList(
@@ -15,7 +15,7 @@ export function useTweetList(
             });
 
             if (!res.ok) throw new Error("Error while deleting tweet")
-            setTweets([...tweets.filter(t => t.id !== id)])
+            setTweets([...tweets.filter(t => t._id !== id)])
 
 
         } catch (error) {

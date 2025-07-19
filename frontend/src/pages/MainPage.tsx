@@ -5,7 +5,7 @@ import {TweetList} from "../tweetList/TweetList.tsx";
 import {useTweetList} from "../tweetList/useTweetList.ts";
 
 export interface Tweet {
-    id: number;
+    _id: number;
     content: string;
 }
 
