@@ -1,29 +1,15 @@
-.tweets{
-    list-style-type: none;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.tweets {
+    @apply w-4/5 max-w-lg flex flex-col justify-center list-none p-0 gap-2;
 }
 
-.tweets li{
-    border: 1px solid #e3e3e3;
-    position: relative;
-    padding: 7px;
-    padding-right: 30px;
-    overflow-wrap: break-word;
+.tweet-item {
+    @apply border border-solid border-gray-200 relative p-[7px] pr-[30px] break-words;
 }
 
-.remove{
-    color: #ea0000;
-    position: absolute;
-    right: 10px;
-    top: 50%;
+
+.remove {
+    @apply text-[#ea0000] absolute right-[10px] top-1/2 hover:cursor-pointer;
     transform: translateY(-50%);
-    transition: color 0.3s;
 }
 
-.remove:hover{
-    cursor: pointer;
-}
+

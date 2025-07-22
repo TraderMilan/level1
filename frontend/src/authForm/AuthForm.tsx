@@ -19,7 +19,7 @@ export function AuthForm({mode}: AuthFormProps) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-            /><br/>
+            />
             <label htmlFor="password">Password</label>
             <input
                 type="password"
@@ -27,7 +27,7 @@ export function AuthForm({mode}: AuthFormProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-            /><br/>
+            />
             {error.length !== 0 && <div style={{ color: 'red' }}>{error}<br/></div>}
             <button type="submit">{endPoint}</button>
         </form>

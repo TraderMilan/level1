@@ -1,19 +1,14 @@
-import './TweetAdd.css'
+import {useTweetAdd} from "./useTweetAdd.ts";
 
 
-export function TweetAdd({
-        newTweet,
-        setNewTweet,
-        handleNewTweet
-    }: {
-        newTweet: string,
-        setNewTweet: (newTweet: string) => void,
-        handleNewTweet: () => void,
-    }) {
-
+export function TweetAdd() {
+    const { newTweet, setNewTweet, handleNewTweet } = useTweetAdd()
 
     return (
-        <div className='form'>
+        <form onSubmit={(e) => {
+            e.preventDefault();
+            handleNewTweet()
+        }}>
             <label htmlFor="tweet">Tweet</label>
             <input
                 type="text"
@@ -21,7 +16,7 @@ export function TweetAdd({
                 value={newTweet}
                 onChange={(e) => setNewTweet(e.target.value)}
             />
-            <button onClick={handleNewTweet}>Post</button>
-        </div>
+            <button type="submit">Post</button>
+        </form>
     )
 }

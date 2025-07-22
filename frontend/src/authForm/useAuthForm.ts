@@ -21,7 +21,7 @@ export function useAuthForm({mode}: AuthFormProps) {
 
             if (name.trim().length === 0 || password.trim().length === 0) return
 
-            const res = await fetch(`http://localhost:3000/user/${endPoint}`, {
+            const res = await fetch(`http://localhost:3000/users/${endPoint}`, {
                 method: 'POST',
                 body: JSON.stringify({username: name, password: password}),
                 headers: {'Content-Type': 'application/json'}
@@ -29,12 +29,13 @@ export function useAuthForm({mode}: AuthFormProps) {
 
             if (!res.ok) throw new Error('Authentification Failed');
 
-            if (mode === 'login') {
-                const token = await res.json();
-                localStorage.setItem('token', token.access_token);
-                navigate('/main');
+            const data = await res.json();
 
+            if (mode === 'login') {
+                localStorage.setItem('token', data.access_token);
+                navigate('/main');
             } else {
+                alert(data.message);
                 navigate('/login');
             }
 

@@ -1,21 +1,23 @@
-import type {Tweet} from "../pages/MainPage.tsx";
+import {useTweetStore} from "../store/useTweetStore.ts";
 
 
-export function useTweetList(
-    tweets: Tweet[],
-    setTweets: (tweets: Tweet[]) => void
-) {
+export function useTweetList() {
 
+    const tweets = useTweetStore((state) => state.tweets)
+    const deleteTweet = useTweetStore((state) => state.deleteTweet)
 
-    async function handleDelete(id: number){
+    async function handleDelete(id: string){
 
         try {
-            const res = await fetch(`http://localhost:3000/tweet/${id}`, {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('Not authenticated');
+            const res = await fetch(`http://localhost:3000/tweets/${id}`, {
                 method: "DELETE",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             });
 
-            if (!res.ok) throw new Error("Error while deleting tweet")
-            setTweets([...tweets.filter(t => t._id !== id)])
+            if (!res.ok) throw new Error("Error while deleting tweets")
+            deleteTweet(id)
 
 
         } catch (error) {
@@ -24,5 +26,5 @@ export function useTweetList(
 
     }
 
-    return {handleDelete}
+    return {tweets, handleDelete}
 }

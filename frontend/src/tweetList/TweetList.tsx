@@ -1,17 +1,13 @@
-import type {Tweet} from '../pages/MainPage.tsx'
 import './TweetList.css'
+import {useTweetList} from "./useTweetList.ts";
 
-type TweetsProps = {
-    tweets: Tweet[]
-    handleDelete: (id: number) => void
-}
 
-export function TweetList({tweets, handleDelete}: TweetsProps  ){
-
+export function TweetList(){
+    const { tweets, handleDelete } = useTweetList()
 
     return(
-        <ul className={"tweets"}>
-            {tweets.map(tweet => <li key={tweet._id}>
+        <ul className="tweets">
+            {tweets.map(tweet => <li className="tweet-item" key={tweet._id}>
                     {tweet.content}
                     <div className={"remove"} onClick={() => handleDelete(tweet._id)}>x</div>
                 </li>

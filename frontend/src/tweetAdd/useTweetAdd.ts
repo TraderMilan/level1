@@ -1,28 +1,29 @@
 import {useState} from "react";
-import type {Tweet} from '../pages/MainPage.tsx'
+import {useTweetStore} from "../store/useTweetStore.ts";
 
-export function useTweetAdd(
-    setTweets: (tweets: Tweet[]) => void,
-) {
+export function useTweetAdd() {
     const [newTweet, setNewTweet] = useState<string>('');
+    const addTweet = useTweetStore((state) => state.addTweet)
 
 
     async function handleNewTweet() {
         if (newTweet.trim().length === 0) return
 
         try {
-            const res = await fetch('http://localhost:3000/tweet', {
+            const token = localStorage.getItem('token');
+            if (!token) throw new Error('Not authenticated');
+
+            const res = await fetch('http://localhost:3000/tweets', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
                 body: JSON.stringify({content: newTweet}),
             })
 
-            if (!res.ok) throw new Error("Error while posting tweet")
+            if (!res.ok) throw new Error("Error while posting tweets")
 
-            const getRes = await fetch('http://localhost:3000/tweet')
-            const data = await getRes.json()
+            const tweet = await res.json()
+            addTweet(tweet)
 
-            setTweets(data)
             setNewTweet('')
 
 

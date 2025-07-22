@@ -3,6 +3,7 @@ import {BrowserRouter, Navigate} from "react-router-dom";
 import {Routes, Route} from "react-router-dom";
 import {RegisterPage} from "../pages/RegisterPage.tsx";
 import {LoginPage} from "../pages/LoginPage.tsx";
+import './App.css'
 
 
 function App() {
