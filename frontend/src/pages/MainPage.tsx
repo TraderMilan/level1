@@ -1,7 +1,9 @@
 import {useEffect} from 'react'
+
 import {TweetAdd} from "../tweetAdd/TweetAdd.tsx";
 import {TweetList} from "../tweetList/TweetList.tsx";
 import {useTweetStore} from "../store/useTweetStore.ts";
+import { API_URL } from "../lib/api";
 
 export function MainPage() {
     const setTweets = useTweetStore(state => state.setTweets)
@@ -13,7 +15,7 @@ export function MainPage() {
                 const token = localStorage.getItem('token');
                 if (!token) throw new Error('Not authenticated');
 
-                const response = await fetch('http://localhost:3000/tweets', {
+                const response = await fetch(`${API_URL}/tweets`, {
                     method: 'GET',
                     headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
                 });

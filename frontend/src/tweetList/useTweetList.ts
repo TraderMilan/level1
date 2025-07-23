@@ -1,4 +1,5 @@
 import {useTweetStore} from "../store/useTweetStore.ts";
+import {API_URL} from "../lib/api";
 
 
 export function useTweetList() {
@@ -11,7 +12,7 @@ export function useTweetList() {
         try {
             const token = localStorage.getItem('token');
             if (!token) throw new Error('Not authenticated');
-            const res = await fetch(`http://localhost:3000/tweets/${id}`, {
+            const res = await fetch(`${API_URL}/tweets/${id}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             });

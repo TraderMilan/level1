@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {API_URL} from "../lib/api";
 
 
 export interface AuthFormProps {
@@ -21,7 +22,7 @@ export function useAuthForm({mode}: AuthFormProps) {
 
             if (name.trim().length === 0 || password.trim().length === 0) return
 
-            const res = await fetch(`http://localhost:3000/users/${endPoint}`, {
+            const res = await fetch(`${API_URL}/users/${endPoint}`, {
                 method: 'POST',
                 body: JSON.stringify({username: name, password: password}),
                 headers: {'Content-Type': 'application/json'}
